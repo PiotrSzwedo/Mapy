@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +10,7 @@
         <source media="(max-width: 768px)" srcset="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png">
         <img src="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png" alt="mapa">
     </picture>
-    <button onclick="losujLiczbe()">Start</button>
+    <button ontouchstart="losujLiczbe()">Start</button>
     <div>
         <span>Podaj poprawną odpowiedź:</span>
         <span id="correct"></span>
@@ -18,14 +19,14 @@
         <span id="number">Wylosowana liczba: </span>
         <input type="text" id="userInput">
     </div>
-    <button onclick="sprawdzOdpowiedz()">Sprawdź</button>
+    <button ontouchstart="sprawdzOdpowiedz()">Sprawdź</button>
 
     <script>
         var numberElement = document.getElementById('number');
 
-        // Funkcja losująca liczbę od 1 do 28
+        // Funkcja losująca liczbę od 1 do 40
         function losujLiczbe() {
-            var wylosowanaLiczba = Math.floor(Math.random() * 39) + 1;
+            var wylosowanaLiczba = Math.floor(Math.random() * 41) + 1;
             numberElement.textContent = 'Wylosowana liczba: ' + wylosowanaLiczba;
         }
 
@@ -77,7 +78,9 @@
                 36: 'Zjednoczone Emiraty Arabskie',
                 37: 'Katar',
                 38: 'Jemen',
-                39: 'Oman'
+                39: 'Oman',
+                40: 'Malezja',
+                41: 'Sri Lanka'
             };
 
             if (liczbyDoLitery[wylosowanaLiczba] === odpowiedzUzytkownika) {
