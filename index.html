@@ -10,7 +10,7 @@
         <source media="(max-width: 768px)" srcset="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png">
         <img src="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png" alt="mapa">
     </picture>
-    <button ontouchstart="losujLiczbe()">Start</button>
+    <button onClick="losujLiczbe()">Start</button>
     <div>
         <span>Podaj poprawną odpowiedź:</span>
         <span id="correct"></span>
@@ -19,7 +19,7 @@
         <span id="number">Wylosowana liczba: </span>
         <input type="text" id="userInput">
     </div>
-    <button ontouchstart="sprawdzOdpowiedz()">Sprawdź</button>
+    <button onClick="sprawdzOdpowiedz()">Sprawdź</button>
 
     <script>
         var numberElement = document.getElementById('number');
