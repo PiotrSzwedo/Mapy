@@ -3,31 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="handheldFriendly" content="true" />
-    <link rel="stylesheet" type="text/css" href="index-style.css">
+    <style>
+        body{
+            height: 100vh;
+            background:rgb(178, 255, 147);
+            font-size: 2vw;
+            display: table;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0px;
+            padding: 0px;
+        }
+        img{
+            border: 2px black solid;
+            width: 100vw;
+            height: 100vw;
+            max-width: 700px;
+            max-height: 700px;
+        }
+        button, input{
+            font-size: 2vw;
+        }
+        button:hover{
+            background: black;
+            color: white;
+        }
+        *{
+            transition: .5s;
+        }
+    </style>
 </head>
 <body>
     <picture>
         <source media="(max-width: 768px)" srcset="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png">
         <img src="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png" alt="mapa">
     </picture>
-    <button onClick="losujLiczbe()">Start</button>
     <div>
-        <span>Podaj poprawną odpowiedź:</span>
-        <span id="correct"></span>
+        <span id="correct">Podaj poprawną odpowiedź:</span>
     </div>
     <div>
         <span id="number">Wylosowana liczba: </span>
         <input type="text" id="userInput">
     </div>
-    <button onClick="sprawdzOdpowiedz()">Sprawdź</button>
+    <section style="display: flex;">
+        <button onClick="losujLiczbe()">Losuj liczbę</button>
+        <button onClick="sprawdzOdpowiedz()">Sprawdź</button>
+    </section>
 
     <script>
+        var correctElement = document.getElementById('correct');
         var numberElement = document.getElementById('number');
 
-        // Funkcja losująca liczbę od 1 do 40
+        // Funkcja losująca liczbę od 1 do 41
         function losujLiczbe() {
             var wylosowanaLiczba = Math.floor(Math.random() * 41) + 1;
             numberElement.textContent = 'Wylosowana liczba: ' + wylosowanaLiczba;
+            correctElement.textContent = 'Podaj poprawną odpowiedź: '
         }
 
         // Funkcja do sprawdzania odpowiedzi
@@ -36,8 +68,6 @@
             var odpowiedzUzytkownika = inputElement.value.toLowerCase();
 
             var wylosowanaLiczba = parseInt(numberElement.textContent.split(' ')[2]);
-
-            var correctElement = document.getElementById('correct');
             
             // Odpowiedzi
                 var liczbyDoLitery = {
@@ -85,12 +115,10 @@
 
             if (liczbyDoLitery[wylosowanaLiczba] === odpowiedzUzytkownika) {
                 correctElement.textContent = 'Poprawna odpowiedź!';
-                losujLiczbe();
                 inputElement.textContent = '';
             } else {
                 correctElement.textContent = 'Poprawna odpowiedź to: ' + liczbyDoLitery[wylosowanaLiczba];
                 inputElement.textContent = '';
-                losujLiczbe();
             }
         }
     </script>
