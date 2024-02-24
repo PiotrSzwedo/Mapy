@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="handheldFriendly" content="true" />
     <style>
-        body{
+        body, main{
             height: 100vh;
-            background:rgb(178, 255, 147);
+            background:rgb(0, 37, 11);
             font-size: 2vw;
             display: table;
             display: flex;
@@ -14,6 +14,13 @@
             align-items: center;
             margin: 0px;
             padding: 0px;
+        }
+        main{
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.7);
+            width: auto;
+            height: auto;
+            margin-bottom: 20px;
         }
         img{
             border: 2px black solid;
@@ -23,7 +30,14 @@
             max-height: 700px;
         }
         button, input{
+            background: white;
+            color: black;
             font-size: 2vw;
+        }
+        button{
+            border-radius: 20px;
+            margin-right: 2px;
+            margin-left: 2px;
         }
         button:hover{
             background: black;
@@ -39,27 +53,27 @@
         <source media="(max-width: 768px)" srcset="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png">
         <img src="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png" alt="mapa">
     </picture>
-    <div>
-        <span id="correct">Podaj poprawną odpowiedź:</span>
-    </div>
-    <div>
-        <span id="number">Wylosowana liczba: </span>
-        <input type="text" id="userInput">
-    </div>
-    <section style="display: flex;">
-        <button onClick="losujLiczbe()">Losuj liczbę</button>
-        <button onClick="sprawdzOdpowiedz()">Sprawdź</button>
-    </section>
-
+    <main>
+        <div>
+            <span id="correct">Podaj poprawną odpowiedź:</span>
+        </div>
+        <div>
+            <span id="number">Wylosowana liczba: </span>
+            <input type="text" id="userInput">
+        </div>
+        <section style="display: flex;">
+            <button onClick="losujLiczbe()">Losuj liczbę</button>
+            <button onClick="sprawdzOdpowiedz()">Sprawdź</button>
+        </section>
+    </main>
     <script>
-        var correctElement = document.getElementById('correct');
         var numberElement = document.getElementById('number');
 
         // Funkcja losująca liczbę od 1 do 41
         function losujLiczbe() {
             var wylosowanaLiczba = Math.floor(Math.random() * 41) + 1;
             numberElement.textContent = 'Wylosowana liczba: ' + wylosowanaLiczba;
-            correctElement.textContent = 'Podaj poprawną odpowiedź: '
+            setCorrectText('Podaj poprawną odpowiedź: ');
         }
 
         // Funkcja do sprawdzania odpowiedzi
@@ -112,14 +126,27 @@
                 40: 'Malezja',
                 41: 'Sri Lanka'
             };
-
-            if (liczbyDoLitery[wylosowanaLiczba] === odpowiedzUzytkownika) {
-                correctElement.textContent = 'Poprawna odpowiedź!';
+            if (isNaN(wylosowanaLiczba)){
+                setCorrectText("Najpierw musisz wylosować liczbę");
+                return;
+            }
+            if (liczbyDoLitery[wylosowanaLiczba].toLowerCase() === odpowiedzUzytkownika) {
+                setUserInputStyle(inputElement, "green", "green");
+                setCorrectText('Poprawna odpowiedź!');
                 inputElement.textContent = '';
             } else {
-                correctElement.textContent = 'Poprawna odpowiedź to: ' + liczbyDoLitery[wylosowanaLiczba];
+                setUserInputStyle(inputElement, "red", "red")
+                setCorrectText('Poprawna odpowiedź to: ' + liczbyDoLitery[wylosowanaLiczba]);
                 inputElement.textContent = '';
             }
+        }
+        function setUserInputStyle(inputElement, background, borderColor){
+            inputElement.style.background = background;
+            inputElement.style.borderColor = borderColor;
+        }
+        function setCorrectText(text){
+            var correctElement = document.getElementById('correct');
+            correctElement.textContent = text;
         }
     </script>
 </body>
