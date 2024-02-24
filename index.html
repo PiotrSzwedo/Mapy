@@ -51,39 +51,39 @@
 <body>
     <picture>
         <source media="(max-width: 768px)" srcset="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png">
-        <img src="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png" alt="mapa">
+        <img src="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/mapa.png">
     </picture>
     <main>
         <div>
-            <span id="correct">Podaj poprawną odpowiedź:</span>
+            <span id="number">Wylosowana liczba: </span>
         </div>
         <div>
-            <span id="number">Wylosowana liczba: </span>
+            <span id="correct">Podaj poprawną odpowiedź:</span>
             <input type="text" id="userInput">
         </div>
         <section style="display: flex;">
-            <button onClick="losujLiczbe()">Losuj liczbę</button>
-            <button onClick="sprawdzOdpowiedz()">Sprawdź</button>
+            <button onClick="drawNumber()">Losuj liczbę</button>
+            <button onClick="checkAnswer()">Sprawdź</button>
         </section>
     </main>
     <script>
         var numberElement = document.getElementById('number');
 
-        // Funkcja losująca liczbę od 1 do 41
-        function losujLiczbe() {
+        function drawNumber() {
+            var inputElement = document.getElementById('userInput');
+            setUserInputStyle(inputElement, "white", "black")
+            inputElement.value = '';
             var wylosowanaLiczba = Math.floor(Math.random() * 41) + 1;
             numberElement.textContent = 'Wylosowana liczba: ' + wylosowanaLiczba;
             setCorrectText('Podaj poprawną odpowiedź: ');
         }
 
-        // Funkcja do sprawdzania odpowiedzi
-        function sprawdzOdpowiedz() {
+        function checkAnswer() {
             var inputElement = document.getElementById('userInput');
-            var odpowiedzUzytkownika = inputElement.value.toLowerCase();
+            var odpowiedzUzytkownika = inputElement.value.toLowerCase().trim();
 
             var wylosowanaLiczba = parseInt(numberElement.textContent.split(' ')[2]);
             
-            // Odpowiedzi
                 var liczbyDoLitery = {
                 1: 'Rosja',
                 2: 'Kazachstan',
@@ -101,6 +101,7 @@
                 14: 'Bangladesz',
                 15: 'Bhutan',
                 16: 'Indie',
+                17: 'Nepal',
                 18: 'Pakistan',
                 19: 'Afganistan',
                 20: 'Tadżykistan',
@@ -133,17 +134,17 @@
             if (liczbyDoLitery[wylosowanaLiczba].toLowerCase() === odpowiedzUzytkownika) {
                 setUserInputStyle(inputElement, "green", "green");
                 setCorrectText('Poprawna odpowiedź!');
-                inputElement.textContent = '';
             } else {
                 setUserInputStyle(inputElement, "red", "red")
                 setCorrectText('Poprawna odpowiedź to: ' + liczbyDoLitery[wylosowanaLiczba]);
-                inputElement.textContent = '';
             }
         }
+
         function setUserInputStyle(inputElement, background, borderColor){
             inputElement.style.background = background;
             inputElement.style.borderColor = borderColor;
         }
+
         function setCorrectText(text){
             var correctElement = document.getElementById('correct');
             correctElement.textContent = text;
