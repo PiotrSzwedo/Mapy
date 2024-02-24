@@ -45,7 +45,15 @@
         *{
             transition: .5s;
         }
+        @media only screen and (min-width: 523px) {
+            button, input{
+                font-size: 2vw;
+            }
+        }
         @media only screen and (max-width: 522px) {
+            button, input{
+                font-size: 15px;
+            }
             main{
                 font-size: 15px;
             }
@@ -147,7 +155,7 @@
                 setCorrectText('Poprawna odpowiedź!');
             } else {
                 setUserInputStyle(inputElement, "red", "red")
-                setCorrectText('Poprawna odpowiedź to: ' + liczbyDoLitery[wylosowanaLiczba]);
+                setCorrectText(liczbyDoLitery[wylosowanaLiczba]);
             }
         }
 
