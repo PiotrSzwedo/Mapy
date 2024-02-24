@@ -32,7 +32,6 @@
         button, input{
             background: white;
             color: black;
-            font-size: 2vw;
         }
         button{
             border-radius: 20px;
@@ -45,6 +44,18 @@
         }
         *{
             transition: .5s;
+        }
+        @media only screen and (max-width: 522px) {
+            main{
+                font-size: 15px;
+            }
+        }
+        @media only screen and (max-width: 370px) {
+            main div{
+                display: flex;
+                flex-direction: column;
+                font-size: 20px;
+            }
         }
     </style>
 </head>
