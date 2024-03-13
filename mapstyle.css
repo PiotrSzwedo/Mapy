@@ -1,6 +1,6 @@
 body, main{
     height: 100vh;
-    background:rgb(0, 37, 11);
+    background:rgb(0, 209, 63);
     font-size: 2vw;
     display: table;
     display: flex;
@@ -41,6 +41,10 @@ a{
 }
 *{
     transition: .5s;
+}
+section{
+    display: flex;
+    justify-content: flex-end;
 }
 @media only screen and (min-width: 523px) {
     button, input{

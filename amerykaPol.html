@@ -12,12 +12,8 @@
         <img src="https://raw.githubusercontent.com/PiotrSzwedo/zdjecie/main/ameryka%20po%C5%82.png">
     </picture>
     <main>
-        <div>
-            <span id="number">Wylosowana liczba: </span>
-        </div>
-        <div>
-            <span id="correct">Podaj poprawną odpowiedź:</span>
-            <input type="text" id="userInput">
+        <div id="numberContainer">
+            <!-- Wylosowane liczby i pola odpowiedzi będą umieszczone tutaj -->
         </div>
         <section style="display: flex;">
             <button onClick="drawNumber()">Losuj liczbę</button>
@@ -26,24 +22,41 @@
     </main>
     <a href="index.html"><--- WRÓĆ</a>
     <script>
-        var numberElement = document.getElementById('number');
-
         function drawNumber() {
-            var inputElement = document.getElementById('userInput');
-            setUserInputStyle(inputElement, "white", "black")
-            inputElement.value = '';
-            var wylosowanaLiczba = Math.floor(Math.random() * 13) + 1;
-            numberElement.textContent = 'Wylosowana liczba: ' + wylosowanaLiczba;
-            setCorrectText('Podaj poprawną odpowiedź: ');
+            var numberContainer = document.getElementById('numberContainer');
+            numberContainer.innerHTML = '';
+
+            for (var i = 0; i < 7; i++) {
+                var wylosowanaLiczba = Math.floor(Math.random() * 13) + 1;
+
+                var divElement = document.createElement('section');
+                var spanElement = document.createElement('span');
+                var inputElement = document.createElement('input');
+
+                spanElement.textContent = '' + (wylosowanaLiczba) + ': ';
+                inputElement.type = 'text';
+                inputElement.id = 'userInput' + i;
+
+                divElement.appendChild(spanElement);
+                divElement.appendChild(inputElement);
+
+                numberContainer.appendChild(divElement);
+            }
+
+            setCorrectText('Podaj poprawne odpowiedzi: ');
         }
 
         function checkAnswer() {
-            var inputElement = document.getElementById('userInput');
-            var odpowiedzUzytkownika = inputElement.value.toLowerCase().trim();
+            var correctAnswers = [];
+            var wylosowaneLiczby = [];
 
-            var wylosowanaLiczba = parseInt(numberElement.textContent.split(' ')[2]);
-            
-                var liczbyDoLitery = {
+            for (var i = 0; i < 7; i++) {
+                var inputElement = document.getElementById('userInput' + i);
+                correctAnswers.push(inputElement ? inputElement.value.toLowerCase().trim() : '');
+                wylosowaneLiczby.push(parseInt(inputElement ? inputElement.parentElement.textContent.match(/\d+/) : 0));
+            }
+
+            var liczbyDoLitery = {
                 1: 'Brazylia',
                 2: 'Boliwia',
                 3: 'Paragwaj',
@@ -58,28 +71,33 @@
                 12: 'Surinam',
                 13: 'Gujana Francuska',
             };
-            if (isNaN(wylosowanaLiczba)){
-                setCorrectText("Najpierw musisz wylosować liczbę");
-                return;
-            }
-            if (liczbyDoLitery[wylosowanaLiczba].toLowerCase() === odpowiedzUzytkownika) {
-                setUserInputStyle(inputElement, "green", "green");
-                setCorrectText('Poprawna odpowiedź!');
-            } else {
-                setUserInputStyle(inputElement, "red", "red")
-                setCorrectText(liczbyDoLitery[wylosowanaLiczba]);
+
+            for (var i = 0; i < wylosowaneLiczby.length; i++) {
+                var currentNumber = wylosowaneLiczby[i];
+                var inputElement = document.getElementById('userInput' + i);
+                var odpowiedzUzytkownika = correctAnswers[i];
+
+                if (liczbyDoLitery[currentNumber] && liczbyDoLitery[currentNumber].toLowerCase() === odpowiedzUzytkownika) {
+                    setUserInputStyle(inputElement, "green", "green");
+                } else {
+                    setUserInputStyle(inputElement, "red", "red");
+
+                    // Dodaj poprawną odpowiedź do pola, jeśli poprzednia była błędna
+                    inputElement.value = liczbyDoLitery[currentNumber];
+                }
             }
         }
 
-        function setUserInputStyle(inputElement, background, borderColor){
+        function setUserInputStyle(inputElement, background, borderColor) {
             inputElement.style.background = background;
             inputElement.style.borderColor = borderColor;
         }
 
-        function setCorrectText(text){
+        function setCorrectText(text) {
             var correctElement = document.getElementById('correct');
             correctElement.textContent = text;
         }
+
         drawNumber();
     </script>
 </body>
