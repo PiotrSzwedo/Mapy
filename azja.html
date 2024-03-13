@@ -22,12 +22,15 @@
     </main>
     <a href="index.html"><--- WRÓĆ</a>
     <script>
+        var usedNumbers = [];
+
         function drawNumber() {
             var numberContainer = document.getElementById('numberContainer');
             numberContainer.innerHTML = '';
+            usedNumbers = [];
 
             for (var i = 0; i < 20; i++) {
-                var wylosowanaLiczba = Math.floor(Math.random() * 41) + 1;
+                var wylosowanaLiczba = getRandomUniqueNumber();
 
                 var divElement = document.createElement('section');
                 var spanElement = document.createElement('span');
@@ -44,6 +47,16 @@
             }
 
             setCorrectText('Podaj poprawne odpowiedzi: ');
+        }
+
+        function getRandomUniqueNumber() {
+            var randomNumber;
+            do {
+                randomNumber = Math.floor(Math.random() * 41) + 1;
+            } while (usedNumbers.includes(randomNumber));
+
+            usedNumbers.push(randomNumber);
+            return randomNumber;
         }
 
         function checkAnswer() {

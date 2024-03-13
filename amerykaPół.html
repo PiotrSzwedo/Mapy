@@ -22,30 +22,42 @@
     </main>
     <a href="index.html"><--- WRÓĆ</a>
     <script>
-        function drawNumber() {
-            var numberContainer = document.getElementById('numberContainer');
-            numberContainer.innerHTML = '';
+        var usedNumbers = [];
 
-            for (var i = 0; i < 7; i++) {
-                var wylosowanaLiczba = Math.floor(Math.random() * 14) + 1;
+    function drawNumber() {
+        var numberContainer = document.getElementById('numberContainer');
+        numberContainer.innerHTML = '';
+        usedNumbers = [];
 
-                var divElement = document.createElement('section');
-                var spanElement = document.createElement('span');
-                var inputElement = document.createElement('input');
+        for (var i = 0; i < 7; i++) {
+            var wylosowanaLiczba = getRandomUniqueNumber();
 
-                spanElement.textContent = '' + (wylosowanaLiczba) + ': ';
-                inputElement.type = 'text';
-                inputElement.id = 'userInput' + i;
+            var divElement = document.createElement('section');
+            var spanElement = document.createElement('span');
+            var inputElement = document.createElement('input');
 
-                divElement.appendChild(spanElement);
-                divElement.appendChild(inputElement);
+            spanElement.textContent = '' + (wylosowanaLiczba) + ': ';
+            inputElement.type = 'text';
+            inputElement.id = 'userInput' + i;
 
-                numberContainer.appendChild(divElement);
-            }
+            divElement.appendChild(spanElement);
+            divElement.appendChild(inputElement);
 
-            setCorrectText('Podaj poprawne odpowiedzi: ');
+            numberContainer.appendChild(divElement);
         }
 
+        setCorrectText('Podaj poprawne odpowiedzi: ');
+    }
+
+    function getRandomUniqueNumber() {
+        var randomNumber;
+        do {
+            randomNumber = Math.floor(Math.random() * 14) + 1;
+        } while (usedNumbers.includes(randomNumber));
+
+        usedNumbers.push(randomNumber);
+        return randomNumber;
+    }
         function checkAnswer() {
             var correctAnswers = [];
             var wylosowaneLiczby = [];
